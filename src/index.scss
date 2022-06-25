@@ -1,0 +1,54 @@
+@import './scss/_normalize';
+@import './scss/_vars';
+
+body {
+	margin: 0;
+	font-family: system-ui, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+
+	background-color: $Color-Aquamarine;
+}
+
+.wrapper {
+	max-width: 1080px;
+	margin: 50px auto;
+
+	border-radius: 20px;
+	background-color: $Color-White;
+
+	box-shadow: 0 10px 20px rgba($Color-Black, 0.04);
+}
+
+.header {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+
+	padding: 40px;
+
+	border-bottom: 1px solid $Color-Gray;
+}
+
+.header__left {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+
+	img {
+		width: 40px;
+		height: 40px;
+	}
+}
+
+.header__rigth {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+
+	li {
+		&:not(:last-of-type) {
+			margin-right: 30px;
+		}
+	}
+}
