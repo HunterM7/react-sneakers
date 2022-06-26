@@ -13,9 +13,13 @@ body {
 	background-color: $Color-Aquamarine;
 }
 
+#root {
+	padding: 85px 0;
+}
+
 .wrapper {
 	max-width: 1080px;
-	margin: 85px auto;
+	margin: 0 auto;
 
 	border-radius: 20px;
 	background-color: $Color-White;
@@ -30,6 +34,7 @@ body {
 	align-items: center;
 
 	padding: 40px 60px;
+	margin-bottom: 40px;
 
 	border-bottom: 1px solid $Color-Gray;
 
@@ -83,6 +88,82 @@ body {
 			font-size: 14px;
 			font-weight: 600;
 			color: $Color-Gray-Dark;
+		}
+	}
+}
+
+.content {
+	padding: 0 60px 60px 60px;
+
+	&__title {
+		margin-bottom: 40px;
+	}
+}
+
+.card {
+	max-width: 210px;
+	padding: 34px 29px;
+
+	border-radius: 40px;
+	border: 1px solid $Color-Gray;
+
+	&__img {
+		width: 100%;
+		min-height: 100px;
+		object-fit: contain;
+		object-position: center bottom;
+
+		margin-bottom: 12px;
+	}
+
+	&__title {
+		font-size: 14px;
+		font-weight: 400;
+		color: $Color-Black;
+
+		margin-bottom: 14px;
+	}
+
+	&__info {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	&__price {
+		display: flex;
+		flex-direction: column;
+
+		span {
+			font-size: 11px;
+			font-weight: 500;
+			color: $Color-Gray-SemiDark;
+			text-transform: uppercase;
+
+			margin-bottom: 4px;
+		}
+		b {
+			font-size: 14px;
+			font-weight: 700;
+			color: $Color-Black;
+		}
+	}
+
+	&__add {
+		width: 32px;
+		height: 32px;
+
+		border-radius: 8px;
+		border: 1px solid $Color-Gray;
+
+		position: relative;
+
+		img {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
 		}
 	}
 }
