@@ -1,0 +1,106 @@
+@import '../../scss/vars.scss';
+
+//? == Button ==
+.btn {
+	display: block;
+	width: 30px;
+	height: 30px;
+
+	position: relative;
+
+	border-radius: 8px;
+	border: 1px solid $Color-Gray;
+	background-color: $Color-White;
+
+	&,
+	&__img {
+		transition: all 0.3s ease;
+	}
+
+	&__img {
+		display: block;
+		width: 100%;
+		height: 100%;
+
+		position: absolute;
+		top: 0;
+		left: 0;
+
+		transform: rotateZ(0deg);
+		transform-origin: center;
+
+		background-color: $Color-Gray;
+	}
+
+	// Adding button
+	&--add {
+		.btn__img {
+			mask: url('./img/add.svg') center / 11px no-repeat;
+			transform: rotateZ(0deg);
+		}
+
+		&.btn--active {
+			border: 0 solid transparent;
+			background-color: $Color-Green;
+
+			.btn__img {
+				background-color: $Color-White;
+				mask: url('./img/mark.svg') center / 10px no-repeat;
+			}
+		}
+
+		&:hover:not(.btn--active) {
+			border-color: $Color-Green;
+
+			.btn__img {
+				transform: rotateZ(-180deg);
+				background-color: $Color-Green;
+			}
+		}
+	}
+
+	// Remove button
+	&--remove {
+		.btn__img {
+			mask: url('./img/add.svg') center / 11px no-repeat;
+			transform: rotateZ(45deg);
+		}
+
+		&.btn--active {
+		}
+
+		&:hover:not(.btn--active) {
+			border-color: $Color-RedLight;
+
+			.btn__img {
+				transform: rotateZ(-135deg);
+				background-color: $Color-RedLight;
+			}
+		}
+	}
+
+	// Favorite button
+	&--favorite {
+		.btn__img {
+			mask: url('./img/heart.svg') center / 16px no-repeat;
+		}
+
+		&.btn--active {
+			border: 0 solid transparent;
+			background-color: $Color-RedLighten;
+
+			.btn__img {
+				background-color: $Color-RedLight;
+				mask: url('./img/heart-active.svg') center / 16px no-repeat;
+			}
+		}
+
+		&:hover:not(.btn--active) {
+			border-color: $Color-RedLight;
+
+			.btn__img {
+				background-color: $Color-RedLight;
+			}
+		}
+	}
+}
