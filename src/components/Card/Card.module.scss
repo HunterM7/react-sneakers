@@ -1,1 +1,86 @@
 //? == Card ==
+
+@import '../../scss/_vars.scss';
+
+.card {
+	max-width: 210px;
+	padding: 34px 29px;
+
+	position: relative;
+
+	border-radius: 40px;
+	border: 1px solid $Color-Gray;
+
+	cursor: pointer;
+
+	transition: all 0.2s ease;
+
+	&:hover {
+		box-shadow: 0 20px 30px rgba($Color-Black, 0.06);
+		transform: translateY(-5px);
+
+		.card__like {
+			opacity: 1;
+		}
+	}
+
+	&__like {
+		position: absolute;
+		top: 30px;
+		left: 30px;
+
+		opacity: 0;
+
+		cursor: pointer;
+
+		transition: all 0.3s ease 0.1s;
+	}
+
+	&__img {
+		width: 100%;
+		min-height: 100px;
+		object-fit: contain;
+		object-position: center bottom;
+
+		margin-bottom: 12px;
+	}
+
+	&__title {
+		font-size: 14px;
+		font-weight: 400;
+		color: $Color-Black;
+
+		margin-bottom: 14px;
+	}
+
+	&__info {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	&__price {
+		display: flex;
+		flex-direction: column;
+
+		span {
+			font-size: 11px;
+			font-weight: 500;
+			color: $Color-Gray-SemiDark;
+			text-transform: uppercase;
+
+			margin-bottom: 4px;
+		}
+		b {
+			font-size: 14px;
+			font-weight: 700;
+			color: $Color-Black;
+		}
+	}
+
+	&__add {
+		width: 32px;
+		height: 32px;
+	}
+}

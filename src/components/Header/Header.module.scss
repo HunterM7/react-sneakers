@@ -1,0 +1,78 @@
+//? == Header ==
+
+@import '../../scss/_vars.scss';
+
+.header {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+
+	padding: 40px 60px;
+	margin-bottom: 40px;
+
+	border-bottom: 1px solid $Color-Gray;
+
+	&__left {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+
+		img {
+			width: 40px;
+			height: 40px;
+
+			margin-right: 16px;
+		}
+	}
+
+	&__right {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+
+		li {
+			&:not(:last-of-type) {
+				margin-right: 30px;
+			}
+		}
+	}
+
+	&__info {
+	}
+
+	&__title {
+		text-transform: uppercase;
+
+		margin-bottom: 4px;
+	}
+
+	&__subtitle {
+	}
+
+	&__cart {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+
+		cursor: pointer;
+
+		img {
+			margin-right: 10px;
+		}
+
+		span {
+			font-size: 14px;
+			font-weight: 600;
+			color: $Color-Gray-Dark;
+		}
+	}
+
+	&__favorite {
+		cursor: pointer;
+	}
+
+	&__user {
+		cursor: pointer;
+	}
+}
