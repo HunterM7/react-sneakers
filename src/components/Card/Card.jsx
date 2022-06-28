@@ -2,7 +2,7 @@ import React from "react"
 import style from './Card.module.scss'
 import Button from '../Button/Button';
 
-const Card = () => {
+const Card = ({ name, price, imgUrl }) => {
 	return (
 		<div className={style.card}>
 
@@ -10,15 +10,15 @@ const Card = () => {
 				<Button type="favorite" isActive="false" />
 			</div>
 
-			<img className={style.card__img} src="/img/sneakers/sneaker-1.png" alt="" />
+			<img className={style.card__img} src={imgUrl} alt="" />
 
-			<p className={style.card__title}>Мужские Кроссовки Nike Blazer Mid Suede</p>
+			<p className={style.card__title}>{name}</p>
 
 			<div className={style.card__info}>
 
 				<div className={style.card__price}>
 					<span>Цена:</span>
-					<b>12 999 руб.</b>
+					<b>{price}</b>
 				</div>
 
 				<div className={style.card__add}>
