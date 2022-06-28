@@ -11,43 +11,63 @@ function App() {
 
 					<h2 className="side-menu__title">Корзина</h2>
 
-					<ul className="cartList">
+					<div className="cart__wrapper">
 
-						<li className="cartItem">
+						<ul className="cartList">
 
-							<img className="cartItem__img" src="./img/sneakers/sneaker-2.png" alt="Sneaker" />
+							<li className="cartItem">
 
-							<div className="cartItem__info">
-								<p className="cartItem__title">Мужские Кроссовки Nike Air Max 270</p>
-								<b className="cartItem__price">12 999 руб.</b>
-							</div>
+								<img className="cartItem__img" src="./img/sneakers/sneaker-2.png" alt="Sneaker" />
 
-							<div className="cartItem__btn">
-								<Button type="remove" isActive="false" />
-							</div>
+								<div className="cartItem__info">
+									<p className="cartItem__title">Мужские Кроссовки Nike Air Max 270</p>
+									<b className="cartItem__price">12 999 руб.</b>
+								</div>
 
-						</li>
+								<div className="cartItem__btn">
+									<Button type="remove" isActive="false" />
+								</div>
 
-						<li className="cartItem">
+							</li>
 
-							<img className="cartItem__img" src="./img/sneakers/sneaker-3.png" alt="Sneaker" />
+							<li className="cartItem">
 
-							<div className="cartItem__info">
-								<p className="cartItem__title">Мужские Кроссовки Nike Blazer Mid Suede</p>
-								<b className="cartItem__price">12 999 руб.</b>
-							</div>
+								<img className="cartItem__img" src="./img/sneakers/sneaker-3.png" alt="Sneaker" />
 
-							<div className="cartItem__btn">
-								<Button type="remove" isActive="false" />
-							</div>
+								<div className="cartItem__info">
+									<p className="cartItem__title">Мужские Кроссовки Nike Blazer Mid Suede</p>
+									<b className="cartItem__price">12 999 руб.</b>
+								</div>
 
-						</li>
+								<div className="cartItem__btn">
+									<Button type="remove" isActive="false" />
+								</div>
 
-					</ul>
+							</li>
+
+						</ul>
+
+					</div>
 
 					<div className="cartResult">
 
+						<ul className="cartResult__list">
+							<li className="cartResult__item">
+								<p className="cartResult__title">Итого:</p>
+								<div className="cartResult__separator"></div>
+								<b className="cartResult__price">21 498 руб.</b>
+							</li>
+							<li className="cartResult__item">
+								<p className="cartResult__title">Налог 5%:</p>
+								<div className="cartResult__separator"></div>
+								<b className="cartResult__price">1074 руб.</b>
+							</li>
+						</ul>
 
+						<button className="cartResult__btn">
+							Оформить заказ
+							<img src="/img/arrow.svg" alt="arrow" />
+						</button>
 
 					</div>
 
