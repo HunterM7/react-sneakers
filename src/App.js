@@ -1,82 +1,46 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import Header from './components/Header/Header'
 import Card from './components/Card/Card'
 import Sidemenu from './components/Sidemenu/Sidemenu';
 
-const cards = [
-	{
-		name: 'Мужские Кроссовки Nike Blazer Mid Suede',
-		price: 12990,
-		imgUrl: '/img/sneakers/sneaker-1.png',
-	},
-	{
-		name: 'Мужские Кроссовки Nike Air Max 270',
-		price: 14690,
-		imgUrl: '/img/sneakers/sneaker-2.png',
-	},
-	{
-		name: 'Мужские Кроссовки Nike Blazer Mid Suede',
-		price: 8490,
-		imgUrl: '/img/sneakers/sneaker-3.png',
-	},
-	{
-		name: 'Кроссовки Puma X Aka Boku Future Rider',
-		price: 8990,
-		imgUrl: '/img/sneakers/sneaker-4.png',
-	},
-	{
-		name: 'Мужские Кроссовки Under Armour Curry 8',
-		price: 15190,
-		imgUrl: '/img/sneakers/sneaker-5.png',
-	},
-	{
-		name: 'Мужские Кроссовки Nike Kyrie 7',
-		price: 11290,
-		imgUrl: '/img/sneakers/sneaker-6.png',
-	},
-	{
-		name: 'Мужские Кроссовки Jordan Air Jordan 11',
-		price: 10790,
-		imgUrl: '/img/sneakers/sneaker-7.png',
-	},
-	{
-		name: 'Мужские Кроссовки Nike LeBron XVIII',
-		price: 16490,
-		imgUrl: '/img/sneakers/sneaker-8.png',
-	},
-	{
-		name: 'Мужские Кроссовки Nike Lebron XVIII Low',
-		price: 13990,
-		imgUrl: '/img/sneakers/sneaker-9.png',
-	},
-	{
-		name: 'Мужские Кроссовки Nike Kyrie Flytrap IV',
-		price: 11290,
-		imgUrl: '/img/sneakers/sneaker-10.png',
-	},
-	{
-		name: 'Мужские Кроссовки Nike Blazer Mid Suede',
-		price: 12990,
-		imgUrl: '/img/sneakers/sneaker-11.png',
-	},
-	{
-		name: 'Мужские Кроссовки Nike Air Max 270',
-		price: 14690,
-		imgUrl: '/img/sneakers/sneaker-12.png',
-	},
-]
-
 function App() {
+	// State for DataBase
+	const [items, setItems] = useState([])
+	// State for Cart
+	const [cartItems, setCartItems] = useState([])
+	// State for sidebar
+	const [isSidebarOpened, setIsSidebarOpened] = useState(false)
+
+	// Fetch
+	useEffect(() => {
+		fetch('https://62bc2af36b1401736cf3f1b2.mockapi.io/items')
+			.then(res => res.json())
+			.then(json => setItems(json))
+	}, [])
+
+	// Adding to cart
+	const addToCart = (item) => {
+		setCartItems(prev => [...prev, item])
+	}
+
 	return (
 		<div className="wrapper">
 
+			{isSidebarOpened &&
+				(
+					<div className="side-menu">
+						<Sidemenu cartItems={cartItems} />
+						<div
+							className="side-menu__overlay"
+							onClick={() => setIsSidebarOpened(false)}
+						></div>
+					</div>
+				)
+			}
 
-			<div className="side-menu">
-				<Sidemenu />
-				<div className="side-menu__overlay"></div>
-			</div>
-
-			<Header />
+			<Header
+				onCartClick={() => setIsSidebarOpened(!isSidebarOpened)}
+			/>
 
 			<div className="content">
 
@@ -91,10 +55,16 @@ function App() {
 				<ul className="content__list">
 
 					{ // Rendering cards
-						cards.map(item => {
+						items.map(item => {
 							return (
 								<li className="content__item">
-									<Card name={item.name} price={item.price} imgUrl={item.imgUrl} />
+									<Card
+										name={item.name}
+										price={item.price}
+										imgUrl={item.imgUrl}
+										addFunc={addToCart}
+										favoriteFunc={() => console.log('favorite')}
+									/>
 								</li>
 							)
 						})

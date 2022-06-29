@@ -1,8 +1,8 @@
 import React from "react"
 import style from './Sidemenu.module.scss'
-import Button from '../Button/Button';
+import CartItem from '../CartItem/CartItem';
 
-const Sidemenu = () => {
+const Sidemenu = ({ cartItems = [] }) => {
 	return (
 		<div className={style.sideMenu}>
 
@@ -12,20 +12,18 @@ const Sidemenu = () => {
 
 				<ul className={style.cartList}>
 
-					<li className={style.cartItem}>
+					{ //Rendering CartItems
+						cartItems.map(item => {
+							return (
+								<li key={Math.random()} className={style.cartItem}>
+									<CartItem
+										cartItem={item}
+									/>
+								</li>
+							)
+						})
+					}
 
-						<img className={style.cartItem__img} src="./img/sneakers/sneaker-2.png" alt="Sneaker" />
-
-						<div className={style.cartItem__info}>
-							<p className={style.cartItem__title}>Мужские Кроссовки Nike Air Max 270</p>
-							<b className={style.cartItem__price}>12 999 руб.</b>
-						</div>
-
-						<div className={style.cartItem__btn}>
-							<Button type="remove" isActive="false" />
-						</div>
-
-					</li>
 
 				</ul>
 

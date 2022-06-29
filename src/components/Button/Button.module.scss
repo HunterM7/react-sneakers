@@ -57,6 +57,10 @@
 				background-color: $Color-Green;
 			}
 		}
+
+		&:active:not(.btn--active) {
+			background-color: lighten($Color-Green, 35%);
+		}
 	}
 
 	// Remove button
@@ -76,6 +80,10 @@
 				transform: rotateZ(-135deg);
 				background-color: $Color-RedLight;
 			}
+		}
+
+		&:active:not(.btn--active) {
+			background-color: lighten($Color-RedLight, 20%);
 		}
 	}
 
@@ -101,6 +109,10 @@
 			.btn__img {
 				background-color: $Color-RedLight;
 			}
+		}
+
+		&:active:not(.btn--active) {
+			background-color: lighten($Color-RedLight, 20%);
 		}
 	}
 }

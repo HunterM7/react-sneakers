@@ -40,50 +40,7 @@
 }
 
 .cartItem {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-
-	border-radius: 20px;
-	border: 1px solid $Color-Gray;
-
-	padding: 20px;
-
 	&:not(:last-of-type) {
 		margin-bottom: 20px;
-	}
-
-	&__img {
-		width: 70px;
-		height: 70px;
-
-		flex-shrink: 0;
-
-		object-fit: contain;
-		object-position: center;
-
-		margin-right: 20px;
-	}
-
-	&__info {
-		margin-right: 10px;
-	}
-
-	&__title {
-		font-size: 14px;
-		font-weight: 400;
-		color: $Color-Black;
-
-		margin-bottom: 8px;
-	}
-
-	&__price {
-		font-size: 14px;
-		font-weight: 700;
-		color: $Color-Black;
-	}
-
-	&__btn {
-		flex-shrink: 0;
 	}
 }

@@ -4,7 +4,8 @@ import style from './Button.module.scss'
 const Button = (
 	{
 		type = 'add', // favorite / add / remove
-		isActive = 'true', // true / false
+		isActive = false, // true / false
+		onClick = () => console.log('You forgot to add a function :=)'), // Any function
 	}
 ) => {
 
@@ -15,10 +16,10 @@ const Button = (
 			type === 'remove' ? ` ${style[`btn--remove`]}` :
 				type === 'favorite' ? ` ${style[`btn--favorite`]}` : ''
 
-	className += isActive === 'true' ? ` ${style[`btn--active`]}` : ''
+	className += isActive ? ` ${style[`btn--active`]}` : ''
 
 	return (
-		<button className={`
+		<button onClick={onClick} className={`
 			${className}
 		`}>
 			<div className={style.btn__img}></div>
