@@ -18,9 +18,18 @@ function App() {
 			.then(json => setItems(json))
 	}, [])
 
-	// Adding to cart
+	// Adding to cart or removing from it
 	const addToCart = (item) => {
-		setCartItems(prev => [...prev, item])
+		if (cartItems.some(el => el.id === item.id)) {
+			setCartItems(prev => {
+				let newArr = prev.filter(el => {
+					return el.id !== item.id
+				})
+				return newArr
+			})
+		} else {
+			setCartItems(prev => [...prev, item])
+		}
 	}
 
 	return (
@@ -59,6 +68,7 @@ function App() {
 							return (
 								<li className="content__item">
 									<Card
+										id={item.id}
 										name={item.name}
 										price={item.price}
 										imgUrl={item.imgUrl}

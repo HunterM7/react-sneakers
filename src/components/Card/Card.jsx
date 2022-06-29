@@ -3,6 +3,7 @@ import style from './Card.module.scss'
 import Button from '../Button/Button';
 
 const Card = ({
+	id,
 	name,
 	price,
 	imgUrl,
@@ -16,7 +17,7 @@ const Card = ({
 	const [isFavoriteActive, setIsFavoriteActive] = useState(false)
 
 	const onClickAdd = () => {
-		addFunc({ name, price, imgUrl })
+		addFunc({ id, name, price, imgUrl })
 		setIsAddActive(!isAddActive)
 	}
 
