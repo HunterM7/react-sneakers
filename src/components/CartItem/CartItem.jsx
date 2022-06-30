@@ -2,7 +2,7 @@ import React from "react"
 import style from './CartItem.module.scss'
 import Button from '../Button/Button';
 
-const CartItem = ({ cartItem }) => {
+const CartItem = ({ cartItem, onRemove }) => {
 	return (
 		<div className={style.cartItem}>
 
@@ -14,7 +14,7 @@ const CartItem = ({ cartItem }) => {
 			</div>
 
 			<div className={style.cartItem__btn}>
-				<Button type="remove" isActive={false} />
+				<Button type="remove" isActive={false} onClick={() => onRemove(cartItem.id)} />
 			</div>
 
 		</div>

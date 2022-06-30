@@ -1,30 +1,38 @@
 import React, { useEffect, useState } from "react"
+import axios from "axios";
 import Header from './components/Header/Header'
 import Card from './components/Card/Card'
 import Sidemenu from './components/Sidemenu/Sidemenu';
 import Button from './components/Button/Button';
+
+const serverItems = 'https://62bc2af36b1401736cf3f1b2.mockapi.io/items/'
+const serverCart = 'https://62bc2af36b1401736cf3f1b2.mockapi.io/cart/'
+const serverFavorite = 'https://62bc2af36b1401736cf3f1b2.mockapi.io/favorite/'
 
 function App() {
 	// State for DataBase
 	const [items, setItems] = useState([])
 	// State for Cart
 	const [cartItems, setCartItems] = useState([])
+	// State for Favorite
+	const [favoriteItems, setFavoriteItems] = useState([])
 	// State for Sidebar
 	const [isSidebarOpened, setIsSidebarOpened] = useState(false)
 	// State for search
 	const [searchValue, setSearchValue] = useState('')
 
-	// Fetch
+	// Axios
 	useEffect(() => {
-		fetch('https://62bc2af36b1401736cf3f1b2.mockapi.io/items')
-			.then(res => res.json())
-			.then(json => setItems(json))
+		axios.get(serverItems).then(res => setItems(res.data))
+		axios.get(serverCart).then(res => setCartItems(res.data))
+		axios.get(serverFavorite).then(res => setFavoriteItems(res.data))
 	}, [])
 
 	// Adding to cart or removing from it
 	const addToCart = (item) => {
 		if (cartItems.some(el => el.id === item.id)) {
 			setCartItems(prev => {
+				removeFromCart(item.id)
 				let newArr = prev.filter(el => {
 					return el.id !== item.id
 				})
@@ -32,6 +40,35 @@ function App() {
 			})
 		} else {
 			setCartItems(prev => [...prev, item])
+			axios.post(serverCart, item)
+		}
+	}
+
+	// Removing from cart
+	const removeFromCart = (id) => {
+		axios.delete(`${serverCart}${id}`)
+		setCartItems(prev => prev.filter(item => item.id !== id))
+	}
+
+	// Removing from favorite
+	const removeFromFavorite = (id) => {
+		axios.delete(`${serverFavorite}${id}`)
+		setFavoriteItems(prev => prev.filter(item => item.id !== id))
+	}
+
+	// Add to Favorite
+	const addToFavorite = (item) => {
+		if (favoriteItems.some(el => el.id === item.id)) {
+			setFavoriteItems(prev => {
+				removeFromFavorite(item.id)
+				let newArr = prev.filter(el => {
+					return el.id !== item.id
+				})
+				return newArr
+			})
+		} else {
+			setFavoriteItems(prev => [...prev, item])
+			axios.post(serverFavorite, item)
 		}
 	}
 
@@ -40,16 +77,11 @@ function App() {
 
 			{isSidebarOpened &&
 				(
-					<div className="side-menu">
-						<Sidemenu
-							cartItems={cartItems}
-							setIsSidebarOpened={setIsSidebarOpened}
-						/>
-						<div
-							className="side-menu__overlay"
-							onClick={() => setIsSidebarOpened(false)}
-						></div>
-					</div>
+					<Sidemenu
+						cartItems={cartItems}
+						setIsSidebarOpened={setIsSidebarOpened}
+						onRemove={removeFromCart}
+					/>
 				)
 			}
 
@@ -100,7 +132,7 @@ function App() {
 											price={item.price}
 											imgUrl={item.imgUrl}
 											addFunc={addToCart}
-											favoriteFunc={() => console.log('favorite')}
+											favoriteFunc={addToFavorite}
 										/>
 									</li>
 								)

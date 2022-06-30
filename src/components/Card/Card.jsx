@@ -22,7 +22,7 @@ const Card = ({
 	}
 
 	const onClickFavorite = () => {
-		favoriteFunc()
+		favoriteFunc({ id, name, price, imgUrl })
 		setIsFavoriteActive(!isFavoriteActive)
 		isFavoriteActive ?
 			setFavoriteClass('') :
