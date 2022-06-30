@@ -1,12 +1,20 @@
 import React from "react"
 import style from './Sidemenu.module.scss'
 import CartItem from '../CartItem/CartItem';
+import Button from '../Button/Button';
 
-const Sidemenu = ({ cartItems = [] }) => {
+const Sidemenu = ({ cartItems = [], setIsSidebarOpened }) => {
 	return (
 		<div className={style.sideMenu}>
 
-			<h2 className={style.sideMenu__title}>Корзина</h2>
+			<div className={style.sideMenu__header}>
+				<h2 className={style.sideMenu__title}>Корзина</h2>
+				<Button
+					type={'remove'}
+					isActive={false}
+					onClick={() => setIsSidebarOpened(false)}
+				/>
+			</div>
 
 			<div className={style.sideMenu__content}>
 

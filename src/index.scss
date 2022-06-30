@@ -22,6 +22,8 @@ body {
 	max-width: 1080px;
 	margin: 0 auto;
 
+	overflow: hidden;
+
 	border-radius: 20px;
 	background-color: $Color-White;
 
@@ -187,5 +189,10 @@ body {
 			font-weight: 400;
 			color: $Color-Gray-SemiDark;
 		}
+	}
+
+	&__btn {
+		width: 30px;
+		height: 30px;
 	}
 }

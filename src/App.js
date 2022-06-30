@@ -2,14 +2,17 @@ import React, { useEffect, useState } from "react"
 import Header from './components/Header/Header'
 import Card from './components/Card/Card'
 import Sidemenu from './components/Sidemenu/Sidemenu';
+import Button from './components/Button/Button';
 
 function App() {
 	// State for DataBase
 	const [items, setItems] = useState([])
 	// State for Cart
 	const [cartItems, setCartItems] = useState([])
-	// State for sidebar
+	// State for Sidebar
 	const [isSidebarOpened, setIsSidebarOpened] = useState(false)
+	// State for search
+	const [searchValue, setSearchValue] = useState('')
 
 	// Fetch
 	useEffect(() => {
@@ -38,7 +41,10 @@ function App() {
 			{isSidebarOpened &&
 				(
 					<div className="side-menu">
-						<Sidemenu cartItems={cartItems} />
+						<Sidemenu
+							cartItems={cartItems}
+							setIsSidebarOpened={setIsSidebarOpened}
+						/>
 						<div
 							className="side-menu__overlay"
 							onClick={() => setIsSidebarOpened(false)}
@@ -54,30 +60,51 @@ function App() {
 			<div className="content">
 
 				<div className="content__header">
-					<h1 className="content__title">Все кроссовки</h1>
+					<h1 className="content__title">{
+						searchValue ?
+							`Поиск: ${searchValue}` :
+							'Все кроссовки'
+					}</h1>
 					<div className="search">
 						<img src="img/search.svg" alt="Search" />
-						<input type="text" placeholder="Search..." />
+						<input
+							type="text"
+							placeholder="Search..."
+							value={searchValue}
+							onChange={e => setSearchValue(e.target.value)}
+						/>
+						<div className="search__btn">
+							{
+								searchValue &&
+								<Button
+									type="remove"
+									onClick={() => setSearchValue('')}
+								/>
+							}
+						</div>
 					</div>
 				</div>
 
 				<ul className="content__list">
 
 					{ // Rendering cards
-						items.map(item => {
-							return (
-								<li className="content__item">
-									<Card
-										id={item.id}
-										name={item.name}
-										price={item.price}
-										imgUrl={item.imgUrl}
-										addFunc={addToCart}
-										favoriteFunc={() => console.log('favorite')}
-									/>
-								</li>
-							)
-						})
+						items
+							.filter(item =>
+								item.name.toLowerCase().includes(searchValue.toLowerCase()))
+							.map(item => {
+								return (
+									<li key={item.id} className="content__item">
+										<Card
+											id={item.id}
+											name={item.name}
+											price={item.price}
+											imgUrl={item.imgUrl}
+											addFunc={addToCart}
+											favoriteFunc={() => console.log('favorite')}
+										/>
+									</li>
+								)
+							})
 					}
 
 				</ul>

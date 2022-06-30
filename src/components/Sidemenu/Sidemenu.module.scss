@@ -17,8 +17,16 @@
 
 	background-color: $Color-White;
 
-	&__title {
+	&__header {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+
 		margin-bottom: 30px;
+	}
+
+	&__title {
 	}
 
 	&__content {
