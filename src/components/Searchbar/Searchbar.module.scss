@@ -1,0 +1,48 @@
+//? == Searchbar ==
+
+@import '../../scss/_vars.scss';
+
+.searchbar {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+
+	padding: 12px 18px;
+
+	border-radius: 10px;
+	border: 1px solid $Color-Gray;
+
+	&__img {
+		display: block;
+		width: 14px;
+		height: 14px;
+
+		flex-shrink: 0;
+
+		margin-right: 14px;
+	}
+
+	&__input {
+		font-size: 16px;
+
+		min-width: 100px;
+
+		flex: 1 1 0;
+
+		margin-right: 14px;
+
+		&::placeholder {
+			font-size: 14px;
+			font-weight: 400;
+			color: $Color-Gray-SemiDark;
+		}
+	}
+
+	&__btn {
+		display: block;
+		width: 30px;
+		height: 30px;
+
+		flex-shrink: 0;
+	}
+}

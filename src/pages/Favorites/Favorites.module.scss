@@ -1,0 +1,32 @@
+//! == Home Page ==
+
+@import '../../scss/_vars.scss';
+
+.favorites {
+	&__header {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+
+		margin-bottom: 25px;
+	}
+
+	&__title {
+	}
+
+	&__search {
+		max-width: 280px;
+		flex: 1;
+	}
+
+	&__list {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		row-gap: 40px;
+		column-gap: calc((100% - 210px * 4) / 3);
+	}
+
+	&__item {
+	}
+}

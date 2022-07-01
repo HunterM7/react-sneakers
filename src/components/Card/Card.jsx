@@ -7,6 +7,7 @@ const Card = ({
 	name,
 	price,
 	imgUrl,
+	isFavorite = false,
 	addFunc,
 	favoriteFunc,
 }) => {
@@ -14,7 +15,7 @@ const Card = ({
 	// State for Add button and Favorite button
 
 	const [isAddActive, setIsAddActive] = useState(false)
-	const [isFavoriteActive, setIsFavoriteActive] = useState(false)
+	const [isFavoriteActive, setIsFavoriteActive] = useState(isFavorite)
 
 	const onClickAdd = () => {
 		addFunc({ id, name, price, imgUrl })
@@ -24,20 +25,14 @@ const Card = ({
 	const onClickFavorite = () => {
 		favoriteFunc({ id, name, price, imgUrl })
 		setIsFavoriteActive(!isFavoriteActive)
-		isFavoriteActive ?
-			setFavoriteClass('') :
-			setFavoriteClass(`${style.active}`)
 	}
-
-	// Visibility for Favorite button
-	const [favoriteClass, setFavoriteClass] = useState('')
 
 	return (
 		<div className={style.card}>
 
 			<div className={`
 				${style.card__like}
-				${favoriteClass}
+				${isFavoriteActive && style.active}
 			`}>
 				<Button
 					type="favorite"

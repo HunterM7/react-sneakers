@@ -1,4 +1,5 @@
 import React from "react"
+import { Link } from "react-router-dom";
 import style from './Header.module.scss'
 
 const Header = ({
@@ -8,16 +9,20 @@ const Header = ({
 	return (
 		<header className={style.header}>
 
-			<div className={style.header__left}>
+			<Link to='/'>
 
-				<img src="/img/logo.png" alt="Logo" />
+				<div className={style.header__left}>
 
-				<div className={style.header__info}>
-					<h3 className={style.header__title}>React sneakers</h3>
-					<p className={style.header__subtitle}>Магазин лучших кроссовок</p>
+					<img src="/img/logo.png" alt="Logo" />
+
+					<div className={style.header__info}>
+						<h3 className={style.header__title}>React sneakers</h3>
+						<p className={style.header__subtitle}>Магазин лучших кроссовок</p>
+					</div>
+
 				</div>
 
-			</div>
+			</Link>
 
 			<ul className={style.header__right}>
 
@@ -27,7 +32,9 @@ const Header = ({
 				</li>
 
 				<li className={style.header__favorite}>
-					<img src="/img/like.svg" alt="Favorite" />
+					<Link to='favorites'>
+						<img src="/img/like.svg" alt="Favorite" />
+					</Link>
 				</li>
 
 				<li className={style.header__user}>
