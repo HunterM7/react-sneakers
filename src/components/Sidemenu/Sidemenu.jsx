@@ -35,7 +35,7 @@ const Sidemenu = ({
 										{ //Rendering CartItems
 											cartItems.map(item => {
 												return (
-													<li key={Math.random()} className={style.cartItem}>
+													<li key={item.id} className={style.cartItem}>
 														<CartItem
 															cartItem={item}
 															onRemove={onRemove}

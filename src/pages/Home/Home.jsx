@@ -1,16 +1,44 @@
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
 import style from './Home.module.scss'
 import Card from '../../components/Card/Card'
 import Searchbar from '../../components/Searchbar/Searchbar';
+import AppContext from '../../context';
 
 const Home = ({
-	items,
-	addToCart,
-	addToFavorite,
-	favoriteItems,
+	isLoading,
 }) => {
 	// State for search
 	const [searchValue, setSearchValue] = useState('')
+	// Import from context
+	const {
+		items,
+		cartItems,
+		isItemAdded,
+		addToCart,
+		addToFavorite,
+		favoriteItems,
+	} = useContext(AppContext)
+
+	const renderItems = () => {
+
+		const filteredItems = items.filter(item => item.name.toLowerCase().includes(searchValue.toLowerCase()))
+
+		return (
+			(isLoading ? [...Array(12)] : filteredItems)
+				.map((item, index) => {
+					return (
+						<li key={index} className={style.home__item}>
+							<Card
+								{...item}
+								isLoading={isLoading}
+								addFunc={addToCart}
+								favoriteFunc={addToFavorite}
+							/>
+						</li>
+					)
+				})
+		)
+	}
 
 	return (
 		<section className={style.home}>
@@ -35,29 +63,7 @@ const Home = ({
 			<ul className={style.home__list}>
 
 				{ // Rendering cards
-					items
-						.filter(item =>
-							item.name.toLowerCase().includes(searchValue.toLowerCase()))
-						.map(item => {
-							//TODO == == == == == == 
-							const isFavorite = favoriteItems.some(el => {
-								return +el.id === +item.id
-							})
-
-							return (
-								<li key={item.id} className={style.home__item}>
-									<Card
-										id={item.id}
-										name={item.name}
-										price={item.price}
-										imgUrl={item.imgUrl}
-										isFavorite={isFavorite}
-										addFunc={addToCart}
-										favoriteFunc={addToFavorite}
-									/>
-								</li>
-							)
-						})
+					renderItems()
 				}
 
 			</ul>

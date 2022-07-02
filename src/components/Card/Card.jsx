@@ -1,66 +1,91 @@
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
+import ContentLoader from "react-content-loader"
 import style from './Card.module.scss'
 import Button from '../Button/Button';
+import AppContext from '../../context';
 
 const Card = ({
 	id,
 	name,
 	price,
 	imgUrl,
-	isFavorite = false,
+	isLoading = false,
 	addFunc,
 	favoriteFunc,
 }) => {
+	// Context for Card
+	const {
+		isItemAdded,
+		cartItems,
+		favoriteItems
+	} = useContext(AppContext)
 
-	// State for Add button and Favorite button
-
-	const [isAddActive, setIsAddActive] = useState(false)
-	const [isFavoriteActive, setIsFavoriteActive] = useState(isFavorite)
+	const isAddedToCart = isItemAdded(cartItems, { id })
+	const isAddedToFavorite = isItemAdded(favoriteItems, { id })
 
 	const onClickAdd = () => {
 		addFunc({ id, name, price, imgUrl })
-		setIsAddActive(!isAddActive)
 	}
 
 	const onClickFavorite = () => {
 		favoriteFunc({ id, name, price, imgUrl })
-		setIsFavoriteActive(!isFavoriteActive)
 	}
 
 	return (
-		<div className={style.card}>
+		<div className={style.card} >
 
-			<div className={`
-				${style.card__like}
-				${isFavoriteActive && style.active}
-			`}>
-				<Button
-					type="favorite"
-					isActive={isFavoriteActive}
-					onClick={onClickFavorite}
-				/>
-			</div>
+			{
+				isLoading ? (
+					<ContentLoader
+						speed={2}
+						width={150}
+						height={200}
+						viewBox="0 0 150 200"
+						backgroundColor="#f2f2f2"
+						foregroundColor="#ecebeb"
+					>
+						<rect x="0" y="0" rx="10" ry="10" width="150" height="90" />
+						<rect x="0" y="118" rx="3" ry="3" width="150" height="16" />
+						<rect x="0" y="138" rx="3" ry="3" width="90" height="16" />
+						<rect x="0" y="174" rx="8" ry="8" width="80" height="24" />
+						<rect x="118" y="166" rx="8" ry="8" width="32" height="32" />
+					</ContentLoader>
+				) : (
+					<>
+						<div className={`
+							${style.card__like}
+							${isAddedToFavorite && style.active}
+						`}>
+							<Button
+								type="favorite"
+								isActive={isAddedToFavorite}
+								onClick={onClickFavorite}
+							/>
+						</div>
 
-			<img className={style.card__img} src={imgUrl} alt="" />
+						<img className={style.card__img} src={imgUrl} alt="" />
 
-			<p className={style.card__title}>{name}</p>
+						<p className={style.card__title}>{name}</p>
 
-			<div className={style.card__info}>
+						<div className={style.card__info}>
 
-				<div className={style.card__price}>
-					<span>Цена:</span>
-					<b>{price}</b>
-				</div>
+							<div className={style.card__price}>
+								<span>Цена:</span>
+								<b>{price}</b>
+							</div>
 
-				<div className={style.card__add}>
-					<Button
-						type="add"
-						isActive={isAddActive}
-						onClick={onClickAdd}
-					/>
-				</div>
+							<div className={style.card__add}>
+								<Button
+									type="add"
+									isActive={isAddedToCart}
+									onClick={onClickAdd}
+								/>
+							</div>
 
-			</div>
+						</div>
+					</>
+				)
+			}
 
 		</div>
 	)

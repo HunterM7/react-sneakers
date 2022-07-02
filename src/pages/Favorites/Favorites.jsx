@@ -1,13 +1,21 @@
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
 import style from './Favorites.module.scss'
+import AppContext from '../../context';
 import Card from '../../components/Card/Card'
 import Searchbar from '../../components/Searchbar/Searchbar';
 
-const Favorites = ({
-	items,
-	addToCart,
-	addToFavorite,
-}) => {
+const Favorites = () => {
+
+	// Import from context
+	const {
+		items,
+		cartItems,
+		isItemAdded,
+		addToCart,
+		addToFavorite,
+		favoriteItems,
+	} = useContext(AppContext)
+
 	// State for search
 	const [searchValue, setSearchValue] = useState('')
 
@@ -34,18 +42,15 @@ const Favorites = ({
 			<ul className={style.favorites__list}>
 
 				{ // Rendering cards
-					items
+					favoriteItems
 						.filter(item =>
 							item.name.toLowerCase().includes(searchValue.toLowerCase()))
 						.map(item => {
+
 							return (
 								<li key={item.id} className={style.favorites__item}>
 									<Card
-										id={item.id}
-										name={item.name}
-										price={item.price}
-										imgUrl={item.imgUrl}
-										isFavorite={true}
+										{...item}
 										addFunc={addToCart}
 										favoriteFunc={addToFavorite}
 									/>
