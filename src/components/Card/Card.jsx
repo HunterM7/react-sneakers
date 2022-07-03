@@ -14,7 +14,7 @@ const Card = ({
 	addFunc,
 	favoriteFunc,
 }) => {
-	// Context for Card
+	// Context for Card 
 	const {
 		isItemAdded,
 		cartItems,
