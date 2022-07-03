@@ -30,7 +30,7 @@ const Card = ({
 
 	const onClickFavorite = () => {
 		favoriteFunc({ id, name, price, imgUrl })
-		setIsAddedToFavorite(!isFavorite)
+		setIsAddedToFavorite(!isAddedToFavorite)
 	}
 
 	return (
