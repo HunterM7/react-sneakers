@@ -1,8 +1,13 @@
-import React from "react"
+import React, { useContext } from "react"
 import style from './CartItem.module.scss'
 import Button from '../Button/Button';
+import AppContext from '../../context';
 
 const CartItem = ({ cartItem, onRemove }) => {
+
+	// Contex for delete button
+	const { serverCart } = useContext(AppContext)
+
 	return (
 		<div className={style.cartItem}>
 
@@ -14,7 +19,7 @@ const CartItem = ({ cartItem, onRemove }) => {
 			</div>
 
 			<div className={style.cartItem__btn}>
-				<Button type="remove" isActive={false} onClick={() => onRemove(cartItem.id)} />
+				<Button type="remove" isActive={false} onClick={() => onRemove(cartItem, serverCart)} />
 			</div>
 
 		</div>

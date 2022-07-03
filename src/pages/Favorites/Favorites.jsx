@@ -8,12 +8,9 @@ const Favorites = () => {
 
 	// Import from context
 	const {
-		items,
-		cartItems,
-		isItemAdded,
+		favoriteItems,
 		addToCart,
 		addToFavorite,
-		favoriteItems,
 	} = useContext(AppContext)
 
 	// State for search
@@ -51,6 +48,7 @@ const Favorites = () => {
 								<li key={item.id} className={style.favorites__item}>
 									<Card
 										{...item}
+										isFavorite
 										addFunc={addToCart}
 										favoriteFunc={addToFavorite}
 									/>

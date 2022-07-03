@@ -10,6 +10,7 @@ const Card = ({
 	price,
 	imgUrl,
 	isLoading = false,
+	isFavorite = false,
 	addFunc,
 	favoriteFunc,
 }) => {
@@ -17,11 +18,11 @@ const Card = ({
 	const {
 		isItemAdded,
 		cartItems,
-		favoriteItems
 	} = useContext(AppContext)
 
-	const isAddedToCart = isItemAdded(cartItems, { id })
-	const isAddedToFavorite = isItemAdded(favoriteItems, { id })
+	const isAddedToCart = isItemAdded(cartItems, id)
+
+	const [isAddedToFavorite, setIsAddedToFavorite] = useState(isFavorite)
 
 	const onClickAdd = () => {
 		addFunc({ id, name, price, imgUrl })
@@ -29,6 +30,7 @@ const Card = ({
 
 	const onClickFavorite = () => {
 		favoriteFunc({ id, name, price, imgUrl })
+		setIsAddedToFavorite(!isFavorite)
 	}
 
 	return (

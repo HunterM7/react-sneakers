@@ -41,45 +41,46 @@ function App() {
 	}, [])
 
 	// Adding to cart or removing from it
-	const addToCart = (item) => {
-		if (cartItems.find(el => +el.id === +item.id)) {
-			removeFromCart(item.id)
+	const addToCart = (item, url = serverCart) => {
+		if (cartItems.some(el => Number(el.id) === Number(item.id))) {
+			removeItemFromState(setCartItems, item.id)
+			removeItemFromServer(url, item.id)
 		} else {
 			axios.post(serverCart, item)
 			setCartItems(prev => [...prev, item])
 		}
 	}
 
-	// Removing from cart
-	const removeFromCart = (id) => {
-		axios.delete(`${serverCart}${id}`)
-		setCartItems(prev => prev.filter(item => +item.id !== +id))
-	}
-
 	// Adding to Favorite or removing from it
 	const addToFavorite = (item) => {
 		if (favoriteItems.find(el => +el.id === +item.id)) {
-			removeFromFavorite(item.id)
+			removeItemFromServer(serverFavorite, item.id)
+			// removeItemFromState(setFavoriteItems, item.id)
 		} else {
 			axios.post(serverFavorite, item)
 			setFavoriteItems(prev => [...prev, item])
 		}
 	}
 
-	// Removing from Favorite
-	const removeFromFavorite = (id) => {
-		axios.delete(`${serverFavorite}${id}`)
-		// setFavoriteItems(prev => prev.filter(item => +item.id !== +id))
+	// Remove item from state and server
+	const removeItemFromState = (stateFunc, id) => {
+		stateFunc(prev => prev.filter(item => Number(item.id) !== Number(id)))
 	}
-
+	const removeItemFromServer = (url, id) => {
+		axios.delete(`${url}${id}`)
+	}
 	// Check if item added to cart or favorite
-	const isItemAdded = (array, item) => {
-		return array.some(el => Number(el.id) === Number(item.id))
+	const isItemAdded = (array, id) => {
+		return array.some(el => Number(el.id) === Number(id))
 	}
 
 	return (
 		<AppContext.Provider
 			value={{
+				serverItems,
+				serverCart,
+				serverFavorite,
+
 				items, setItems,
 				cartItems, setCartItems,
 				favoriteItems, setFavoriteItems,
@@ -89,6 +90,8 @@ function App() {
 
 				addToCart,
 				addToFavorite,
+				removeItemFromState,
+				removeItemFromServer,
 				isItemAdded,
 			}}
 		>
@@ -99,7 +102,7 @@ function App() {
 						<Sidemenu
 							cartItems={cartItems}
 							setIsSidebarOpened={setIsSidebarOpened}
-							onRemove={removeFromCart}
+							onRemove={addToCart}
 						/>
 					)
 				}

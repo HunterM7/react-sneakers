@@ -12,11 +12,10 @@ const Home = ({
 	// Import from context
 	const {
 		items,
-		cartItems,
-		isItemAdded,
 		addToCart,
 		addToFavorite,
 		favoriteItems,
+		isItemAdded,
 	} = useContext(AppContext)
 
 	const renderItems = () => {
@@ -31,6 +30,13 @@ const Home = ({
 							<Card
 								{...item}
 								isLoading={isLoading}
+								isFavorite={() => {
+									//TODO: При первой отрисовке не подгружается item. Возвращает все-равно Array(12) и в результате undefined
+									let res = isItemAdded(favoriteItems, item && item.id)
+									// console.log(item)
+									// console.log(res)
+									return res
+								}}
 								addFunc={addToCart}
 								favoriteFunc={addToFavorite}
 							/>
