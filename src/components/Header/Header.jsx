@@ -16,7 +16,7 @@ const Header = ({
 					<img src="/img/logo.png" alt="Logo" />
 
 					<div className={style.header__info}>
-						<h3 className={style.header__title}>React sneakers</h3>
+						<h4 className={style.header__title}>React sneakers</h4>
 						<p className={style.header__subtitle}>Магазин лучших кроссовок</p>
 					</div>
 
@@ -38,7 +38,9 @@ const Header = ({
 				</li>
 
 				<li className={style.header__user}>
-					<img src="/img/user.svg" alt="User" />
+					<Link to='orders'>
+						<img src="/img/user.svg" alt="User" />
+					</Link>
 				</li>
 
 			</ul>

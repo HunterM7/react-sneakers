@@ -6,10 +6,12 @@ import Header from './components/Header/Header'
 import Sidemenu from './components/Sidemenu/Sidemenu';
 import Home from './pages/Home/Home';
 import Favorites from "./pages/Favorites/Favorites";
+import Orders from './pages/Orders/Orders';
 
 const serverItems = 'https://62bc2af36b1401736cf3f1b2.mockapi.io/items/'
 const serverCart = 'https://62bc2af36b1401736cf3f1b2.mockapi.io/cart/'
 const serverFavorite = 'https://62bc2af36b1401736cf3f1b2.mockapi.io/favorite/'
+const serverOrders = 'https://62bc2af36b1401736cf3f1b2.mockapi.io/orders'
 
 function App() {
 	// State for DataBase
@@ -53,9 +55,9 @@ function App() {
 
 	// Adding to Favorite or removing from it
 	const addToFavorite = (item) => {
-		if (favoriteItems.find(el => +el.id === +item.id)) {
+		if (favoriteItems.find(el => Number(el.id) === Number(item.id))) {
 			removeItemFromServer(serverFavorite, item.id)
-			// removeItemFromState(setFavoriteItems, item.id)
+			removeItemFromState(setFavoriteItems, item.id)
 		} else {
 			axios.post(serverFavorite, item)
 			setFavoriteItems(prev => [...prev, item])
@@ -80,6 +82,7 @@ function App() {
 				serverItems,
 				serverCart,
 				serverFavorite,
+				serverOrders,
 
 				items, setItems,
 				cartItems, setCartItems,
@@ -99,11 +102,7 @@ function App() {
 
 				{isSidebarOpened &&
 					(
-						<Sidemenu
-							cartItems={cartItems}
-							setIsSidebarOpened={setIsSidebarOpened}
-							onRemove={addToCart}
-						/>
+						<Sidemenu />
 					)
 				}
 
@@ -131,6 +130,14 @@ function App() {
 								<Favorites
 									addToCart={addToCart}
 									addToFavorite={addToFavorite}
+								/>
+							}
+						/>
+
+						<Route
+							path="orders"
+							element={
+								<Orders
 								/>
 							}
 						/>

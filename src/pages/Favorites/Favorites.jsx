@@ -3,6 +3,7 @@ import style from './Favorites.module.scss'
 import AppContext from '../../context';
 import Card from '../../components/Card/Card'
 import Searchbar from '../../components/Searchbar/Searchbar';
+import Plug from '../../components/Plug/Plug';
 
 const Favorites = () => {
 
@@ -27,37 +28,52 @@ const Favorites = () => {
 						'Мои закладки'
 				}</h1>
 
-				<div className={style.favorites__search}>
-					<Searchbar
-						searchValue={searchValue}
-						setSearchValue={setSearchValue}
-					/>
-				</div>
+				{
+					favoriteItems.length ? (
+						<div className={style.favorites__search}>
+							<Searchbar
+								searchValue={searchValue}
+								setSearchValue={setSearchValue}
+							/>
+						</div>
+					) : null
+				}
 
 			</div>
 
-			<ul className={style.favorites__list}>
+			{
+				favoriteItems.length ? (
+					<>
+						<ul className={style.favorites__list}>
 
-				{ // Rendering cards
-					favoriteItems
-						.filter(item =>
-							item.name.toLowerCase().includes(searchValue.toLowerCase()))
-						.map(item => {
+							{ // Rendering cards
+								favoriteItems
+									.filter(item =>
+										item.name.toLowerCase().includes(searchValue.toLowerCase()))
+									.map(item => {
 
-							return (
-								<li key={item.id} className={style.favorites__item}>
-									<Card
-										{...item}
-										isFavorite
-										addFunc={addToCart}
-										favoriteFunc={addToFavorite}
-									/>
-								</li>
-							)
-						})
-				}
+										return (
+											<li key={item.id} className={style.favorites__item}>
+												<Card
+													{...item}
+													isFavorite
+													addFunc={addToCart}
+													favoriteFunc={addToFavorite}
+												/>
+											</li>
+										)
+									})
+							}
 
-			</ul>
+						</ul>
+					</>
+				) : (
+					<Plug
+						type={'favorite'}
+						onClick={console.log('click favorite button')}
+					/>
+				)
+			}
 
 		</section>
 	)

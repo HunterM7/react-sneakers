@@ -3,6 +3,9 @@
 @import '../../scss/_vars.scss';
 
 .favorites {
+	width: 100%;
+	height: 100%;
+
 	&__header {
 		display: flex;
 		flex-direction: row;

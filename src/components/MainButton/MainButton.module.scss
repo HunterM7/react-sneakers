@@ -1,0 +1,79 @@
+//? == Main Button ==
+
+@import '../../scss/_vars.scss';
+
+.btn {
+	font-size: 16px;
+	font-weight: 600;
+	color: $Color-White;
+
+	width: 100%;
+
+	padding: 18px;
+
+	position: relative;
+
+	border-radius: 18px;
+	background-color: $Color-Green;
+
+	transition: background-color 0.2s ease;
+
+	&:hover {
+		background-color: lighten($Color-Green, 5%);
+
+		.btn__arrow.leftArrow {
+			transform: translate(-5px, -50%);
+		}
+
+		.btn__arrow.rigthArrow {
+			transform: translate(5px, -50%);
+		}
+	}
+
+	&:active {
+		background-color: darken($Color-Green, 5%);
+	}
+
+	&:disabled {
+		background-color: #bebebe;
+		cursor: default;
+
+		animation: loadingButton 0.8s ease-in-out infinite;
+	}
+
+	&__arrow {
+		display: block;
+		width: 16px;
+		height: 14px;
+
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+
+		transition: transform 0.2s ease;
+
+		&.leftArrow {
+			left: 30px;
+
+			img {
+				transform: rotate(180deg);
+			}
+		}
+
+		&.rigthArrow {
+			right: 30px;
+		}
+	}
+}
+
+@keyframes loadingButton {
+	0% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0.8;
+	}
+	100% {
+		opacity: 1;
+	}
+}

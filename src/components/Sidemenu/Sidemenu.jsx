@@ -1,13 +1,45 @@
-import React from "react"
+import React, { useState, useContext } from "react"
 import style from './Sidemenu.module.scss'
 import CartItem from '../CartItem/CartItem';
 import Button from '../Button/Button';
+import Plug from '../Plug/Plug';
+import MainButton from '../MainButton/MainButton';
+import AppContext from '../../context';
+import axios from 'axios';
 
-const Sidemenu = ({
-	cartItems = [],
-	setIsSidebarOpened,
-	onRemove,
-}) => {
+const Sidemenu = () => {
+
+	const {
+		cartItems,
+		setCartItems,
+		setIsSidebarOpened,
+		addToCart,
+		serverCart,
+		serverOrders,
+	} = useContext(AppContext)
+
+	const [isOrderDone, setIsOrderDone] = useState(false)
+	const [orderId, setOrderId] = useState(null)
+	const [isLoading, setIsLoading] = useState(false)
+
+	const onClickOrder = async () => {
+		try {
+			setIsLoading(true)
+			const { data } = await axios.post(serverOrders, { items: cartItems })
+
+			for (let i = 0; i < cartItems.length; i++) {
+				await axios.delete(`${serverCart}${cartItems[i].id}`)
+			}
+
+			setOrderId(data.id)
+			setCartItems([])
+			setIsOrderDone(true)
+		} catch (error) {
+			alert('Не удалось создать заказ!')
+		}
+
+		setIsLoading(false)
+	}
 
 	return (
 		<div className={style.wrapper}>
@@ -38,7 +70,7 @@ const Sidemenu = ({
 													<li key={item.id} className={style.cartItem}>
 														<CartItem
 															cartItem={item}
-															onRemove={onRemove}
+															onRemove={addToCart}
 														/>
 													</li>
 												)
@@ -49,31 +81,48 @@ const Sidemenu = ({
 
 								</div>
 
-								<div className="cartResult">
+								<div className={style.cartResult}>
 
-									<ul className="cartResult__list">
-										<li className="cartResult__item">
-											<p className="cartResult__title">Итого:</p>
-											<div className="cartResult__separator"></div>
-											<b className="cartResult__price">21 498 руб.</b>
+									<ul className={style.cartResult__list}>
+										<li className={style.cartResult__item}>
+											<p className={style.cartResult__title}>Итого:</p>
+											<div className={style.cartResult__separator}></div>
+											<b className={style.cartResult__price}>21 498 руб.</b>
 										</li>
-										<li className="cartResult__item">
-											<p className="cartResult__title">Налог 5%:</p>
-											<div className="cartResult__separator"></div>
-											<b className="cartResult__price">1074 руб.</b>
+										<li className={style.cartResult__item}>
+											<p className={style.cartResult__title}>Налог 5%:</p>
+											<div className={style.cartResult__separator}></div>
+											<b className={style.cartResult__price}>1074 руб.</b>
 										</li>
 									</ul>
 
-									<button className="cartResult__btn">
-										Оформить заказ
-										<img src="/img/arrow.svg" alt="arrow" />
-									</button>
+									<div className={style.cartResult__btn}>
+
+										<MainButton
+											isDisabled={isLoading}
+											text={'Оформить заказ'}
+											isSubmit
+											onClickFunc={onClickOrder}
+										/>
+
+									</div>
 
 								</div>
 							</div>
 
-						) :
-						(<h1>Корзина пуста</h1>)
+						) : isOrderDone ? (
+							<Plug
+								orderId={orderId}
+								type={'orderDone'}
+								onClick={() => setIsSidebarOpened(false)}
+							/>
+						) : (
+							<Plug
+								type={'cart'}
+								onClick={() => setIsSidebarOpened(false)}
+							/>
+						)
+
 				}
 
 			</div>
