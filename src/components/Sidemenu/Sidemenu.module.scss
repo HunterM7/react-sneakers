@@ -11,6 +11,23 @@
 	left: 0;
 
 	z-index: 200;
+
+	visibility: hidden;
+
+	transition: visibility 0.3s ease-in-out;
+
+	&.active {
+		visibility: visible;
+
+		.sideMenu {
+			// right: 0;
+			transform: translateX(0);
+		}
+
+		.overlay {
+			opacity: 1;
+		}
+	}
 }
 
 .sideMenu {
@@ -27,7 +44,11 @@
 	top: 0;
 	z-index: 1;
 
+	transform: translateX(100%);
+
 	background-color: $Color-White;
+
+	transition: transform 0.3s ease-in-out;
 
 	&__header {
 		display: flex;
@@ -130,4 +151,8 @@
 	left: 0;
 
 	background-color: rgba($Color-Black, 0.5);
+
+	opacity: 0;
+
+	transition: opacity 0.3s ease-in-out;
 }

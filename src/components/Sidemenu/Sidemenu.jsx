@@ -6,17 +6,25 @@ import Plug from '../Plug/Plug';
 import MainButton from '../MainButton/MainButton';
 import AppContext from '../../context';
 import axios from 'axios';
+import { useCart } from "../../hooks/useCart";
 
-const Sidemenu = () => {
+
+
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms))
+
+const Sidemenu = ({ isSidebarOpened }) => {
 
 	const {
-		cartItems,
-		setCartItems,
 		setIsSidebarOpened,
 		addToCart,
 		serverCart,
 		serverOrders,
 	} = useContext(AppContext)
+
+	isSidebarOpened && document.body.classList.add('blocked')
+	!isSidebarOpened && document.body.classList.remove('blocked')
+
+	const { cartItems, setCartItems, totalPrice } = useCart()
 
 	const [isOrderDone, setIsOrderDone] = useState(false)
 	const [orderId, setOrderId] = useState(null)
@@ -29,6 +37,7 @@ const Sidemenu = () => {
 
 			for (let i = 0; i < cartItems.length; i++) {
 				await axios.delete(`${serverCart}${cartItems[i].id}`)
+				await delay(100)
 			}
 
 			setOrderId(data.id)
@@ -42,7 +51,10 @@ const Sidemenu = () => {
 	}
 
 	return (
-		<div className={style.wrapper}>
+		<div className={`
+			${style.wrapper}
+			${isSidebarOpened && style.active}
+		`}>
 
 			<div className={style.sideMenu}>
 
@@ -87,12 +99,12 @@ const Sidemenu = () => {
 										<li className={style.cartResult__item}>
 											<p className={style.cartResult__title}>Итого:</p>
 											<div className={style.cartResult__separator}></div>
-											<b className={style.cartResult__price}>21 498 руб.</b>
+											<b className={style.cartResult__price}>{`${totalPrice} руб.`}</b>
 										</li>
 										<li className={style.cartResult__item}>
 											<p className={style.cartResult__title}>Налог 5%:</p>
 											<div className={style.cartResult__separator}></div>
-											<b className={style.cartResult__price}>1074 руб.</b>
+											<b className={style.cartResult__price}>{`${totalPrice * 0.05} руб.`}</b>
 										</li>
 									</ul>
 
@@ -127,10 +139,10 @@ const Sidemenu = () => {
 
 			</div>
 
-			<div
-				className={style.overlay}
+			<div className={style.overlay}
 				onClick={() => setIsSidebarOpened(false)}
 			></div>
+
 
 		</div>
 	)

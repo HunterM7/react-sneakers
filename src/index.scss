@@ -12,6 +12,10 @@ body {
 	-moz-osx-font-smoothing: grayscale;
 
 	background-color: $Color-Aquamarine;
+
+	&.blocked {
+		overflow-y: hidden;
+	}
 }
 
 #root {
@@ -22,12 +26,14 @@ body {
 	max-width: 1080px;
 	margin: 0 auto;
 
-	overflow: hidden;
-
 	border-radius: 20px;
 	background-color: $Color-White;
 
 	box-shadow: 0 10px 20px rgba($Color-Black, 0.04);
+
+	&.disabled {
+		overflow: hidden;
+	}
 }
 
 .content {

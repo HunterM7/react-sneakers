@@ -27,32 +27,39 @@ function App() {
 
 	// Axios
 	useEffect(() => {
-		async function fetchData() {
-			setIsLoading(true)
-			const cartResponse = await axios.get(serverCart)
-			const favoriteResponse = await axios.get(serverFavorite)
-			const itemsResponse = await axios.get(serverItems)
+		try {
+			async function fetchData() {
+				setIsLoading(true)
+				const cartResponse = await axios.get(serverCart)
+				const favoriteResponse = await axios.get(serverFavorite)
+				const itemsResponse = await axios.get(serverItems)
 
-			setIsLoading(false)
-			setCartItems(cartResponse.data)
-			setFavoriteItems(favoriteResponse.data)
-			setItems(itemsResponse.data)
+				setIsLoading(false)
+				setCartItems(cartResponse.data)
+				setFavoriteItems(favoriteResponse.data)
+				setItems(itemsResponse.data)
+			}
+
+			fetchData()
+		} catch (error) {
+			alert('Что-то пошло не так при загрузке данных с сервера')
 		}
-
-		fetchData()
 	}, [])
 
 	// Adding to cart or removing from it
-	const addToCart = (item, url = serverCart) => {
-		if (cartItems.some(el => Number(el.id) === Number(item.id))) {
-			removeItemFromState(setCartItems, item.id)
-			removeItemFromServer(url, item.id)
-		} else {
-			axios.post(serverCart, item)
-			setCartItems(prev => [...prev, item])
+	const addToCart = async (item, url = serverCart) => {
+		try {
+			if (cartItems.some(el => Number(el.id) === Number(item.id))) {
+				removeItemFromState(setCartItems, item.id)
+				removeItemFromServer(url, item.id)
+			} else {
+				setCartItems(prev => [...prev, item])
+				await axios.post(serverCart, item)
+			}
+		} catch (error) {
+			alert('Ошибка при попытке добавить или удалить товар')
 		}
 	}
-
 	// Adding to Favorite or removing from it
 	const addToFavorite = (item) => {
 		if (favoriteItems.find(el => Number(el.id) === Number(item.id))) {
@@ -63,7 +70,6 @@ function App() {
 			setFavoriteItems(prev => [...prev, item])
 		}
 	}
-
 	// Remove item from state and server
 	const removeItemFromState = (stateFunc, id) => {
 		stateFunc(prev => prev.filter(item => Number(item.id) !== Number(id)))
@@ -98,13 +104,9 @@ function App() {
 				isItemAdded,
 			}}
 		>
-			<div className="wrapper">
+			<div className='wrapper' >
 
-				{isSidebarOpened &&
-					(
-						<Sidemenu />
-					)
-				}
+				<Sidemenu isSidebarOpened={isSidebarOpened} />
 
 				<Header
 					onCartClick={() => setIsSidebarOpened(!isSidebarOpened)}
@@ -114,33 +116,24 @@ function App() {
 
 					<Routes>
 
-						<Route
-							path="/"
-							element={
-								<Home
-									favoriteItems={favoriteItems}
-									isLoading={isLoading}
-								/>
-							}
-						/>
+						<Route path="/" element={
+							<Home
+								favoriteItems={favoriteItems}
+								isLoading={isLoading}
+							/>
+						} />
 
-						<Route
-							path="favorites"
-							element={
-								<Favorites
-									addToCart={addToCart}
-									addToFavorite={addToFavorite}
-								/>
-							}
-						/>
+						<Route path="favorites" element={
+							<Favorites
+								addToCart={addToCart}
+								addToFavorite={addToFavorite}
+							/>
+						} />
 
-						<Route
-							path="orders"
-							element={
-								<Orders
-								/>
-							}
-						/>
+						<Route path="orders" element={
+							<Orders
+							/>
+						} />
 
 					</Routes>
 

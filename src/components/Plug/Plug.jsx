@@ -37,7 +37,7 @@ const Plug = ({
 
 		case 'orderDone':
 			title = 'Заказ оформлен!'
-			desc = `Ваш заказ #${orderId} скоро будет передан курьерской доставке`
+			desc = `Ваш заказ №${orderId} скоро будет передан курьерской доставке`
 			btnText = 'Вернуться назад'
 			img = imgOrderDone
 			break;
