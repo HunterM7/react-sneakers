@@ -19,7 +19,7 @@ const CartItem = ({ cartItem, onRemove }) => {
 			</div>
 
 			<div className={style.cartItem__btn}>
-				<Button type="remove" isActive={false} onClick={() => onRemove(cartItem, serverCart)} />
+				<Button type="remove" isActive={false} onClick={() => onRemove({ id: cartItem.parentId }, serverCart)} />
 			</div>
 
 		</div>

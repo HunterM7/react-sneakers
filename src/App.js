@@ -29,7 +29,7 @@ function App() {
 	useEffect(() => {
 		try {
 			async function fetchData() {
-				setIsLoading(true)
+				// setIsLoading(true)
 
 				const [
 					cartResponse,
@@ -63,7 +63,7 @@ function App() {
 				removeItemFromServer(url, findItem.id)
 			} else {
 				setCartItems(prev => [...prev, item])
-				const { data } = await axios.post(serverCart, item)
+				const { data } = await axios.post(url, item)
 				setCartItems(prev => prev.map(item => {
 					if (Number(item.parentId) === Number(data.parentId)) {
 						return {
@@ -79,6 +79,7 @@ function App() {
 			console.debug(error)
 		}
 	}
+
 	// Adding to Favorite or removing from it
 	const addToFavorite = async (item) => {
 		try {
