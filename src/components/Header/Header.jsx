@@ -16,7 +16,7 @@ const Header = ({
 
 				<div className={style.header__left}>
 
-					<img src="/img/logo.png" alt="Logo" />
+					<img src="img/logo.png" alt="Logo" />
 
 					<div className={style.header__info}>
 						<h4 className={style.header__title}>React sneakers</h4>
@@ -30,19 +30,19 @@ const Header = ({
 			<ul className={style.header__right}>
 
 				<li onClick={onCartClick} className={style.header__cart}>
-					<img src="/img/cart.svg" alt="Cart" />
+					<img src="img/cart.svg" alt="Cart" />
 					<span>{`${totalPrice} руб.`}</span>
 				</li>
 
 				<li className={style.header__favorite}>
 					<Link to='favorites'>
-						<img src="/img/like.svg" alt="Favorite" />
+						<img src="img/like.svg" alt="Favorite" />
 					</Link>
 				</li>
 
 				<li className={style.header__user}>
 					<Link to='orders'>
-						<img src="/img/user.svg" alt="User" />
+						<img src="img/user.svg" alt="User" />
 					</Link>
 				</li>
 

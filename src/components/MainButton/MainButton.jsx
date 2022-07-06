@@ -18,7 +18,7 @@ const MainButton = ({
 			`}>
 
 				<img
-					src="/img/arrow.svg"
+					src="img/arrow.svg"
 					alt="arrow" />
 
 			</div>

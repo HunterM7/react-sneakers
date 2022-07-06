@@ -35,7 +35,7 @@
 	// Adding button
 	&--add {
 		.btn__img {
-			mask: url('./img/add.svg') center / 11px no-repeat;
+			mask: url('img/add.svg') center / 11px no-repeat;
 			transform: rotateZ(0deg);
 		}
 
@@ -45,7 +45,7 @@
 
 			.btn__img {
 				background-color: $Color-White;
-				mask: url('./img/mark.svg') center / 10px no-repeat;
+				mask: url('img/mark.svg') center / 10px no-repeat;
 			}
 		}
 
@@ -66,7 +66,7 @@
 	// Remove button
 	&--remove {
 		.btn__img {
-			mask: url('./img/add.svg') center / 11px no-repeat;
+			mask: url('img/add.svg') center / 11px no-repeat;
 			transform: rotateZ(45deg);
 		}
 
@@ -90,7 +90,7 @@
 	// Favorite button
 	&--favorite {
 		.btn__img {
-			mask: url('./img/heart.svg') center / 16px no-repeat;
+			mask: url('img/heart.svg') center / 16px no-repeat;
 		}
 
 		&.btn--active {
@@ -99,7 +99,7 @@
 
 			.btn__img {
 				background-color: $Color-RedLight;
-				mask: url('./img/heart-active.svg') center / 16px no-repeat;
+				mask: url('img/heart-active.svg') center / 16px no-repeat;
 			}
 		}
 
