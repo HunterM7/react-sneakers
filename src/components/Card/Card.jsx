@@ -24,12 +24,14 @@ const Card = ({
 
 	const [isAddedToFavorite, setIsAddedToFavorite] = useState(isFavorite)
 
+	const itemObj = { id, parentId: id, name, price, imgUrl }
+
 	const onClickAdd = () => {
-		addFunc({ id, name, price, imgUrl })
+		addFunc(itemObj)
 	}
 
 	const onClickFavorite = () => {
-		favoriteFunc({ id, name, price, imgUrl })
+		favoriteFunc(itemObj)
 		setIsAddedToFavorite(!isAddedToFavorite)
 	}
 

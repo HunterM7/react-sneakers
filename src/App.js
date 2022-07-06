@@ -30,9 +30,16 @@ function App() {
 		try {
 			async function fetchData() {
 				setIsLoading(true)
-				const cartResponse = await axios.get(serverCart)
-				const favoriteResponse = await axios.get(serverFavorite)
-				const itemsResponse = await axios.get(serverItems)
+
+				const [
+					cartResponse,
+					favoriteResponse,
+					itemsResponse,
+				] = await Promise.all([
+					axios.get(serverCart),
+					axios.get(serverFavorite),
+					axios.get(serverItems),
+				])
 
 				setIsLoading(false)
 				setCartItems(cartResponse.data)
@@ -49,37 +56,58 @@ function App() {
 	// Adding to cart or removing from it
 	const addToCart = async (item, url = serverCart) => {
 		try {
-			if (cartItems.some(el => Number(el.id) === Number(item.id))) {
+			const findItem = cartItems.find(el => Number(el.parentId) === Number(item.id))
+
+			if (findItem) {
 				removeItemFromState(setCartItems, item.id)
-				removeItemFromServer(url, item.id)
+				removeItemFromServer(url, findItem.id)
 			} else {
 				setCartItems(prev => [...prev, item])
-				await axios.post(serverCart, item)
+				const { data } = await axios.post(serverCart, item)
+				setCartItems(prev => prev.map(item => {
+					if (Number(item.parentId) === Number(data.parentId)) {
+						return {
+							...item,
+							id: data.id
+						}
+					}
+					return item
+				}))
 			}
 		} catch (error) {
 			alert('Ошибка при попытке добавить или удалить товар')
+			console.debug(error)
 		}
 	}
 	// Adding to Favorite or removing from it
-	const addToFavorite = (item) => {
-		if (favoriteItems.find(el => Number(el.id) === Number(item.id))) {
-			removeItemFromServer(serverFavorite, item.id)
-			removeItemFromState(setFavoriteItems, item.id)
-		} else {
-			axios.post(serverFavorite, item)
-			setFavoriteItems(prev => [...prev, item])
+	const addToFavorite = async (item) => {
+		try {
+			if (favoriteItems.find(el => Number(el.id) === Number(item.id))) {
+				removeItemFromServer(serverFavorite, item.id)
+				removeItemFromState(setFavoriteItems, item.id)
+			} else {
+				setFavoriteItems(prev => [...prev, item])
+				await axios.post(serverFavorite, item)
+			}
+		} catch (error) {
+			console.debug(error)
 		}
 	}
 	// Remove item from state and server
 	const removeItemFromState = (stateFunc, id) => {
-		stateFunc(prev => prev.filter(item => Number(item.id) !== Number(id)))
+		stateFunc(prev => prev.filter(item => Number(item.parentId) !== Number(id)))
 	}
-	const removeItemFromServer = (url, id) => {
-		axios.delete(`${url}${id}`)
+	const removeItemFromServer = async (url, id) => {
+		try {
+			await axios.delete(`${url}${id}`)
+		} catch (error) {
+			alert('Ошибка при попытке удалить товар с сервера')
+			console.debug(error)
+		}
 	}
 	// Check if item added to cart or favorite
 	const isItemAdded = (array, id) => {
-		return array.some(el => Number(el.id) === Number(id))
+		return array.some(el => Number(el.parentId) === Number(id))
 	}
 
 	return (
